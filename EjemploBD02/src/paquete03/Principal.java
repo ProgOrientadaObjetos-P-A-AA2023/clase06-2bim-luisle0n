@@ -22,8 +22,8 @@ public class Principal {
         
         c.insertarAuto(a);
         
-        for (int i = 0; i < c.obtenerDataAuto().size(); i++) {
-            System.out.printf("%s\n", c.obtenerDataAuto().get(i));
+        for (int i = 0; i < c.obtenerAuto().size(); i++) {
+            System.out.printf("%s\n", c.obtenerAuto().get(i));
         }
     }
 }

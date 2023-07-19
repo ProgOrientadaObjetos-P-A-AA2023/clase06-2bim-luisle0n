@@ -21,7 +21,7 @@ public class Enlace {
      * @return 
     */
     private Connection conn;
-       
+    private ArrayList<Ciudad> lista= new ArrayList<>();
     public void establecerConexion() {  
 
         try {  
@@ -43,7 +43,7 @@ public class Enlace {
     }
     
     public void insertarCiudad(Ciudad ciudad) {  
-  
+        
         try{  
             establecerConexion();
             Statement statement = obtenerConexion().createStatement();
@@ -59,19 +59,15 @@ public class Enlace {
         }  
     }
     
-    public ArrayList<Ciudad> obtenerDataCiudad() {  
-        ArrayList<Ciudad> lista = new ArrayList<>();
+    public ArrayList<Ciudad> establecerDataCiudad() {  
+        
         try{  
             establecerConexion();
             Statement statement = obtenerConexion().createStatement();
             String data = "Select * from Ciudad;";
             
             ResultSet rs = statement.executeQuery(data);
-            while(rs.next()){
-                Ciudad miCiudad = new Ciudad(rs.getString("nombre"),
-                rs.getInt("poblacion"));
-                lista.add(miCiudad);
-            }
+            
             
             obtenerConexion().close();
         } catch (SQLException e) {  
@@ -81,5 +77,20 @@ public class Enlace {
         }  
         return lista;
     }
-     
+    public void agregarCiudades(ResultSet rs){
+      
+        try {
+            while(rs.next()){
+                Ciudad miCiudad = new Ciudad(rs.getString("nombre"),
+                rs.getInt("poblacion"));
+                lista.add(miCiudad);
+            }
+        } catch (SQLException e) {  
+             System.out.println("Exception: insertarCiudad");
+             System.out.println(e.getMessage());  
+             
+        }  
+    } 
+
+   
 }  
