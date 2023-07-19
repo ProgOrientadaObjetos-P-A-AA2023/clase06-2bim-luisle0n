@@ -59,37 +59,41 @@ public class Enlace {
         }  
     }
     
-    public ArrayList<Ciudad> establecerDataCiudad() {  
-        
-        try{  
+    public void establecerDataCiudad() {
+        lista = new ArrayList<>();
+        try {
             establecerConexion();
             Statement statement = obtenerConexion().createStatement();
             String data = "Select * from Ciudad;";
-            
             ResultSet rs = statement.executeQuery(data);
-            
-            
+            agregarCiuadad(rs);
             obtenerConexion().close();
-        } catch (SQLException e) {  
-             System.out.println("Exception: insertarCiudad");
-             System.out.println(e.getMessage());  
-             
-        }  
+        } catch (SQLException e) {
+            System.out.println("Exception: insertarCiudad");
+            System.out.println(e.getMessage());
+
+        }
+
+    }
+
+    public ArrayList<Ciudad> obtenerDataCiudad() {
         return lista;
     }
-    public void agregarCiudades(ResultSet rs){
-      
+
+    public void agregarCiuadad(ResultSet rs) {
+
         try {
-            while(rs.next()){
+            while (rs.next()) {
                 Ciudad miCiudad = new Ciudad(rs.getString("nombre"),
-                rs.getInt("poblacion"));
+                        rs.getInt("poblacion"));
                 lista.add(miCiudad);
             }
-        } catch (SQLException e) {  
-             System.out.println("Exception: insertarCiudad");
-             System.out.println(e.getMessage());  
-             
-        }  
+            obtenerConexion().close();
+        } catch (SQLException e) {
+            System.out.println("Exception: insertarCiudad");
+            System.out.println(e.getMessage());
+
+        }
     } 
 
    
